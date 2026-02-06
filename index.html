@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pajajaran Physical Society</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- GSAP -->
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+    <!-- THREE.JS -->
+    <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+
+</head>
+<body>
+
+    <canvas id="starfield"></canvas>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-left">
+            <img src="assets/logo.png" class="logo" alt="PPS Logo">
+            <span>Pajajaran Physical Society</span>
+        </div>
+        <nav>
+            <a>Home</a>
+            <a>About</a>
+            <a>Activity</a>
+            <a>Article</a>
+            <a>Search</a>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Pajajaran Physical Society</h1>
+
+            <p>
+                Adalah sebuah komunitas independen yang berfokus dalam kegiatan
+                penyebaran ilmu fisika beserta manfaatnya bagi masyarakat sekitar.
+            </p>
+
+            <p class="hero-sub">
+                A not-for-profit, independent, and unofficial community
+                spreading physics knowledge and its benefits to the public.
+            </p>
+
+            <button class="btn-primary">About Us</button>
+        </div>
+    </section>
+
+    <!-- AKTIVITAS -->
+    <section class="section">
+        <h2>AKTIVITAS KAMI</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <div class="card-media">
+                    <img src="assets/logo.png">
+                </div>
+                <h3>Interesting Fact Time</h3>
+                <p>
+                    Penyebaran ilmu fisika melalui poster dan media sosial
+                    (Instagram, TikTok, YouTube).
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-media">
+                    <img src="assets/logo.png">
+                </div>
+                <h3>Science Project</h3>
+                <p>
+                    Pengenalan metode saintifik melalui eksperimen dan analisis fenomena.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-media">
+                    <img src="assets/logo.png">
+                </div>
+                <h3>Bimbingan KTI</h3>
+                <p>
+                    Pendampingan PKM dan lomba karya tulis ilmiah.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="center">
+            <button class="btn-secondary">SHOW MORE</button>
+        </div>
+    </section>
+
+    <!-- MORE ARTICLE -->
+    <section class="section alt">
+        <h2>MORE ARTICLE</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <div class="card-media"><img src="assets/logo.png"></div>
+                <h3>PLTS SUMBER ENERGI</h3>
+                <p>Energi surya dan penerapannya.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-media"><img src="assets/logo.png"></div>
+                <h3>ALAM INDAH</h3>
+                <p>Fisika di balik keindahan alam.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-media"><img src="assets/logo.png"></div>
+                <h3>FISIKA KEHIDUPAN</h3>
+                <p>Fisika dalam kehidupan sehari-hari.</p>
+            </div>
+
+        </div>
+    </section>
+    <!-- INSTAGRAM FEED -->
+    <section class="section">
+        <h2>INSTAGRAM @pps_society</h2>
+
+        <!-- Replace widget id later with real one -->
+        <!-- LightWidget WIDGET -->
+        <script src="https://cdn.lightwidget.com/widgets/lightwidget.js">
+            </script>
+        <iframe src="//lightwidget.com/widgets/ee3eb16a51e55206a72709190947b1b4.html"
+                scrolling="no"
+                allowtransparency="true"
+                class="lightwidget-widget"
+                style="width:100%;border:0;overflow:hidden;">
+        </iframe>
+
+    </section>
+    <!-- NEWSLETTER -->
+    <section class="section newsletter">
+        <h2>BERLANGGANAN PPS</h2>
+        <p>Form sign up (dummy)</p>
+
+        <form>
+            <input type="email" placeholder="email@dummy.my.id">
+            <button class="btn-primary">SIGN UP</button>
+        </form>
+    </section>
+
+    <!-- KONTEN & BERITA -->
+    <section class="section alt">
+        <h2>KONTEN & BERITA</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <div class="card-media"><img src="assets/logo.png"></div>
+                <h3>SMA 16 BANDUNG</h3>
+                <p>Kegiatan pengenalan fisika di sekolah.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-media"><img src="assets/logo.png"></div>
+                <h3>SMA TELKOM BANDUNG</h3>
+                <p>Kegiatan edukasi dan eksperimen fisika.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid">
+
+            <div class="footer-brand">
+                <img src="assets/logo.png">
+                <h3>Pajajaran Physical Society</h3>
+                <p>
+                    Komunitas independen yang berfokus dalam penyebaran ilmu fisika
+                    beserta manfaatnya bagi masyarakat.
+                </p>
+                <p class="footer-sub">
+                    A not-for-profit, independent, and unofficial community.
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Artikel</h4>
+                <a>Konten</a>
+                <a>Berita</a>
+                <a>Aktivitas</a>
+            </div>
+
+            <div class="footer-links">
+                <h4>Tentang Kami</h4>
+                <a>Profil</a>
+                <a>Langganan</a>
+                <a>Kontak</a>
+            </div>
+
+            <div class="footer-social">
+                <h4>IKUTI KAMI</h4>
+                <div class="social-icons">
+                    <span>IG</span>
+                    <span>YT</span>
+                    <span>TT</span>
+                    <span>IN</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            © 2026 Jupiter PPS
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

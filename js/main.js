@@ -1,24 +1,9 @@
 ﻿gsap.registerPlugin(ScrollTrigger);
 
-// 1. Navbar Scroll Effect
-window.addEventListener("scroll", () => {
-    const nav = document.querySelector(".nav-content");
-    if (window.scrollY > 50) {
-        nav.style.background = "rgba(10, 10, 10, 0.9)";
-    } else {
-        nav.style.background = "rgba(20, 20, 20, 0.8)";
-    }
-});
-
-// 2. Initial Setup (Hide elements for animation)
+// Start
 gsap.set(".card-glass, .card-wide, .section-title, .pill-title", { y: 50, opacity: 0 });
 
-// 3. Hero Animation
-const tl = gsap.timeline();
-tl.from(".hero-text > *", { y: 30, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out", delay: 0.2 })
-    .from(".hero-img", { x: 30, opacity: 0, duration: 1, ease: "power2.out" }, "-=0.6");
-
-// 4. Scroll Reveal Animations
+// Scroll Animations
 gsap.utils.toArray(".section, .newsletter").forEach(section => {
     const elements = section.querySelectorAll(".card-glass, .card-wide, .section-title, .pill-title, .newsletter-content > *");
     if (elements.length > 0) {
@@ -38,7 +23,58 @@ gsap.utils.toArray(".section, .newsletter").forEach(section => {
     }
 });
 
-// 5. Starfield Background
+// Navbar Scroll
+window.addEventListener("scroll", () => {
+    const nav = document.querySelector(".nav-content");
+    if (window.scrollY > 50) {
+        nav.style.background = "rgba(10, 10, 10, 0.9)";
+    } else {
+        nav.style.background = "rgba(20, 20, 20, 0.8)";
+    }
+});
+
+// Hero Animation
+const tl = gsap.timeline();
+tl.from(".hero-text > *", { y: 30, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out", delay: 0.2 })
+    .from(".hero-img", { x: 30, opacity: 0, duration: 1, ease: "power2.out" }, "-=0.6");
+
+// Mobile Menu T
+const navLinks = document.querySelector(".nav-links");
+const hamburgerIcon = document.querySelector(".hamburger i");
+
+function toggleMenu() {
+    navLinks.classList.toggle("active");
+    if (navLinks.classList.contains("active")) {
+        hamburgerIcon.classList.remove("fa-bars");
+        hamburgerIcon.classList.add("fa-xmark");
+    } else {
+        hamburgerIcon.classList.remove("fa-xmark");
+        hamburgerIcon.classList.add("fa-bars");
+    }
+}
+
+function closeMenu() {
+    navLinks.classList.remove("active");
+    hamburgerIcon.classList.remove("fa-xmark");
+    hamburgerIcon.classList.add("fa-bars");
+}
+
+document.addEventListener('click', (e) => {
+    const navbar = document.querySelector('.navbar-floating');
+    if (!navbar.contains(e.target)) closeMenu();
+});
+
+// Search control
+const searchForm = document.getElementById('searchForm');
+if (searchForm) {
+    searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const query = document.getElementById('searchInput').value;
+        if (query) alert("Searching for: " + query);
+    });
+}
+
+// Starfield
 const canvas = document.getElementById("starfield");
 if (canvas) {
     const scene = new THREE.Scene();

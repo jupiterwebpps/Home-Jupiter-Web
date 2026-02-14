@@ -1,273 +1,216 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Kumpulan artikel tentang fisika dan sains dari Pajajaran Physical Society" />
-  <meta name="theme-color" content="#191919" />
-  
-  <title>Artikel - Pajajaran Physical Society</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pajajaran Physical Society</title>
 
-  <!-- Preload critical assets -->
-  <link rel="preload" href="assets/css/styles.css" as="style" />
-  <link rel="preload" href="assets/img/Logo-01.png" as="image" />
-  
-  <link rel="stylesheet" href="assets/css/styles.css" />
-  <script defer src="assets/js/script.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
 </head>
+
 <body>
 
-  <!-- Skip to main content link for accessibility -->
-  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+    <canvas id="starfield"></canvas>
+    <div class="cosmic-grid"></div>
 
-  <!-- NAVBAR -->
-  <div class="container pill-nav-wrap">
-    <nav class="pill-nav" role="navigation" aria-label="Main navigation">
-      <!-- LOGO ONLY (Navbar) -->
-      <a class="brand brand--logo-only" href="article-list.html" aria-label="Pajajaran Physical Society Home">
-        <img
-          class="brand-logo brand-logo--wide"
-          src="assets/img/Logo-01.png"
-          alt="Pajajaran Physical Society"
-          width="140"
-          height="24"
-        />
-      </a>
+    <nav class="navbar-floating">
+        <div class="nav-content">
+            <a href="#" class="nav-logo">
+                <img src="assets/Logo-01.png" alt="PPS Logo">
+            </a>
 
-      <!-- Navigation Links -->
-      <div class="nav-links" aria-label="Primary navigation">
-        <a href="#" aria-label="Home page">Home</a>
-        <a href="#" aria-label="About us">About</a>
-        <a href="#" aria-label="Our activities">Activity</a>
-        <a class="is-active" href="article-list.html" aria-current="page">Article</a>
-      </div>
+            <div class="nav-links">
+                <a href="#home" onclick="closeMenu()">Home</a>
+                <a href="#activity" onclick="closeMenu()">Activity</a>
+                <a href="#article" onclick="closeMenu()">Article</a>
+                <a href="#content" onclick="closeMenu()">Content</a>
+            </div>
 
-      <!-- Search Form -->
-      <form class="search search--collapse" role="search" onsubmit="return false;" aria-label="Article search">
-        <label class="search-icon" for="q" aria-label="Search articles">
-          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path fill="currentColor"
-              d="M10 2a8 8 0 105.293 14.293l4.207 4.207 1.414-1.414-4.207-4.207A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
-          </svg>
-        </label>
-        <input 
-          id="q" 
-          class="search-input" 
-          type="search" 
-          placeholder="Cari artikel..." 
-          autocomplete="off"
-          aria-label="Search for articles" 
-        />
-      </form>
+            <div class="nav-right">
+                <div class="nav-search">
+                    <form id="searchForm">
+                        <input type="text" id="searchInput" placeholder="Search...">
+                        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                </div>
+
+                <div class="hamburger" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+        </div>
     </nav>
-  </div>
 
-  <!-- MAIN CONTENT -->
-  <main class="container" id="main-content">
-    <!-- HERO SECTION -->
-    <section class="hero" role="banner" aria-labelledby="hero-title">
-      <div class="hero-inner">
-        <div class="hero-kicker" role="doc-subtitle">
-          <span class="dot" aria-hidden="true"></span>
-          ARTIKEL
+    <section class="hero" id="home">
+        <div class="hero-text">
+            <div class="badge-pill">EST. 2026</div>
+            <h1>Pajajaran<br><span class="orange-text">Physical Society</span></h1>
+            <p class="hero-desc">
+                Menjelajahi semesta fisika, dari partikel terkecil hingga galaksi terjauh.
+                Komunitas independen untuk penyebaran sains.
+            </p>
+
+            <div class="hero-buttons">
+                <button class="btn-main">About Us</button>
+                <div class="social-hero">
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
         </div>
-        <h1 id="hero-title" class="hero-title">Kumpulan Artikel</h1>
-        <p class="hero-sub">
-          Jelajahi berbagai artikel menarik tentang fisika, sains, dan teknologi dari komunitas Pajajaran Physical Society.
-        </p>
-      </div>
+
+        <div class="hero-img">
+            <img src="assets/logo.png" alt="Hero Illustration">
+        </div>
     </section>
 
-    <!-- ARTICLES SECTION -->
-    <section class="section" aria-labelledby="section-title">
-      <!-- Section Header -->
-      <div class="section-head">
-        <h2 id="section-title" class="section-title">PILIH TOPIK</h2>
+    <section class="section" id="activity">
+        <h2 class="section-title">AKTIVITAS KAMI</h2>
 
-        <!-- Topic Filter -->
-        <div class="section-tools" role="group" aria-label="Filter artikel berdasarkan topik">
-          <button 
-            class="chip is-active" 
-            data-topic="all" 
-            aria-pressed="true"
-            aria-label="Tampilkan semua artikel"
-          >
-            Semua
-          </button>
-          <button 
-            class="chip" 
-            data-topic="Konten"
-            aria-pressed="false"
-            aria-label="Filter artikel konten"
-          >
-            Konten
-          </button>
-          <button 
-            class="chip" 
-            data-topic="Berita"
-            aria-pressed="false"
-            aria-label="Filter artikel berita"
-          >
-            Berita
-          </button>
-          <button 
-            class="chip" 
-            data-topic="Edukasi"
-            aria-pressed="false"
-            aria-label="Filter artikel edukasi"
-          >
-            Edukasi
-          </button>
+        <div class="grid-3">
+            <div class="card-glass">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=600&q=80" alt="Fact">
+                </div>
+                <div class="card-info">
+                    <h3>Interesting Fact</h3>
+                    <p>Fakta unik fisika harian melalui media sosial.</p>
+                </div>
+            </div>
+
+            <div class="card-glass">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80" alt="Project">
+                </div>
+                <div class="card-info">
+                    <h3>Science Project</h3>
+                    <p>Pengenalan metode saintifik dan eksperimen.</p>
+                </div>
+            </div>
+
+            <div class="card-glass">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80" alt="KTI">
+                </div>
+                <div class="card-info">
+                    <h3>Bimbingan KTI</h3>
+                    <p>Mentoring karya tulis ilmiah dan proposal PKM.</p>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <!-- Articles Grid -->
-      <div 
-        class="grid" 
-        id="cards" 
-        role="region" 
-        aria-live="polite" 
-        aria-label="Daftar artikel"
-      >
-        <!-- Akan diisi otomatis oleh JavaScript -->
-        <!-- Loading state bisa ditambahkan di sini -->
-        <div class="col-12" style="text-align:center; padding:40px 0;" id="loading-state">
-          <p class="text-muted">Memuat artikel...</p>
-        </div>
-      </div>
-
-      <!-- Pagination -->
-      <nav 
-        class="pagination" 
-        aria-label="Article pagination" 
-        id="pager" 
-        style="display:none;"
-        role="navigation"
-      >
-        <!-- Akan diisi otomatis oleh JavaScript -->
-      </nav>
     </section>
-  </main>
 
-  <!-- FOOTER -->
-  <footer class="pps-footer" role="contentinfo">
-    <div class="container pps-footer__inner">
-      <div class="pps-footer__grid">
+    <section class="section" id="article">
+        <div class="pill-title">ARTIKEL TERBARU</div>
+        <div class="line-break"></div>
 
-        <!-- LEFT: Brand & Description -->
-        <div class="pps-footer__brand">
-          <div class="pps-footer__brandline">
-            <img
-              class="pps-footer__brandlogo"
-              src="assets/img/footer-logo.png"
-              alt="Pajajaran Physical Society"
-              width="182"
-              height="56"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-
-          <p class="pps-footer__desc">
-            Adalah sebuah komunitas independen yang berfokus dalam kegiatan penyebaran ilmu fisika beserta manfaatnya bagi masyarakat sekitar.
-          </p>
-
-          <p class="pps-footer__desc pps-footer__desc--en">
-            <em>Is a not-for-profit, independent, and unofficial community that focuses on spreading knowledge of physics and its benefits to the public.</em>
-          </p>
+        <div class="grid-2">
+            <div class="card-wide">
+                <div class="wide-img">
+                    <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b0?auto=format&fit=crop&w=800&q=80" alt="PLTS">
+                </div>
+                <div class="wide-info">
+                    <h3>PLTS SUMBER ENERGI</h3>
+                    <p>Energi terbarukan untuk masa depan yang berkelanjutan.</p>
+                </div>
+            </div>
+            <div class="card-wide">
+                <div class="wide-img">
+                    <img src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=800&q=80" alt="Alam">
+                </div>
+                <div class="wide-info">
+                    <h3>ALAM INDAH</h3>
+                    <p>Memahami fenomena fisika di alam semesta.</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- MIDDLE: Navigation Menu -->
-        <nav class="pps-footer__menu" aria-label="Footer navigation">
-          <a class="pps-footer__menuitem" href="article-list.html">Artikel</a>
-          <a class="pps-footer__menuitem" href="#">Tentang Kami</a>
-          <a class="pps-footer__menuitem" href="#">Konten</a>
-          <a class="pps-footer__menuitem" href="#">Berita</a>
-          <a class="pps-footer__menuitem" href="#">Langganan</a>
-          <a class="pps-footer__menuitem" href="#">Aktivitas</a>
-        </nav>
-
-        <!-- RIGHT: CTA & Social Media -->
-        <div class="pps-footer__follow">
-          <a 
-            class="pps-footer__cta" 
-            href="#" 
-            aria-label="Ikuti Pajajaran Physical Society di media sosial"
-          >
-            IKUTI KAMI
-          </a>
-
-          <div class="pps-footer__socials" role="list" aria-label="Social media links">
-            <!-- YouTube -->
-            <a 
-              class="pps-footer__social" 
-              href="#" 
-              aria-label="Follow us on YouTube"
-              role="listitem"
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path fill="currentColor" d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.8 4.6 12 4.6 12 4.6s-5.8 0-7.5.5A3 3 0 0 0 2.4 7.2 31 31 0 0 0 2 12s0 3.4.4 4.8a3 3 0 0 0 2.1 2.1c1.7.5 7.5.5 7.5.5s5.8 0 7.5-.5a3 3 0 0 0 2.1-2.1c.4-1.4.4-4.8.4-4.8s0-3.4-.4-4.8ZM10 15.5v-7l6 3.5-6 3.5Z"/>
-              </svg>
-            </a>
-
-            <!-- Instagram -->
-            <a 
-              class="pps-footer__social" 
-              href="#" 
-              aria-label="Follow us on Instagram"
-              role="listitem"
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path fill="currentColor" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm-5 4.5A3.5 3.5 0 1 1 8.5 12 3.5 3.5 0 0 1 12 8.5Zm0 2A1.5 1.5 0 1 0 13.5 12 1.5 1.5 0 0 0 12 10.5ZM17.8 6.8a.8.8 0 1 1-.8-.8.8.8 0 0 1 .8.8Z"/>
-              </svg>
-            </a>
-
-            <!-- TikTok -->
-            <a 
-              class="pps-footer__social" 
-              href="#" 
-              aria-label="Follow us on TikTok"
-              role="listitem"
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path fill="currentColor" d="M14 3v10.2a3.6 3.6 0 1 1-3-3.5V7.3a6.5 6.5 0 1 0 5 6.3V8.4c1.1 1 2.5 1.6 4 1.7V7.6c-2-.2-3.6-1.6-4-4.6H14Z"/>
-              </svg>
-            </a>
-
-            <!-- LinkedIn -->
-            <a 
-              class="pps-footer__social" 
-              href="#" 
-              aria-label="Follow us on LinkedIn"
-              role="listitem"
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path fill="currentColor" d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.1A4.2 4.2 0 0 1 17.7 9c4 0 4.8 2.6 4.8 6v6H18.5v-5.3c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21H10V9Z"/>
-              </svg>
-            </a>
-          </div>
+    <section class="newsletter">
+        <div class="newsletter-overlay"></div>
+        <div class="newsletter-content">
+            <h2>BERLANGGANAN PPS</h2>
+            <p>Dapatkan update kegiatan dan artikel terbaru via email.</p>
+            <form onsubmit="event.preventDefault()">
+                <input type="email" placeholder="Masukkan email anda...">
+                <button type="submit">SIGN UP</button>
+            </form>
         </div>
+    </section>
 
-      </div>
+    <section class="section" id="content">
+        <div class="header-with-social">
+            <div class="pill-title">KONTEN INSTAGRAM</div>
+            <a href="https://instagram.com/pps_society" target="_blank" class="ig-link">
+                <i class="fa-brands fa-instagram"></i> @pps_society
+            </a>
+        </div>
+        <div class="line-break"></div>
 
-      <!-- Copyright -->
-      <div class="pps-footer__bottom">
-        <p>&copy; 2026 Pajajaran Physical Society. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
+        <div class="instagram-widget-container">
+            <div style="width: 100%; height: 400px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; border-radius: 20px; border: 1px dashed #444; color: #888; text-align: center; padding: 20px;">
+                <h3>[Area konten instagram]<br><span style="font-size: 14px; font-weight: 400;">Paste kode iframenya di sini nanti kalau udah ada akun pps</span></h3>
+            </div>
+        </div>
+    </section>
 
-  <!-- Back to top button (optional enhancement) -->
-  <button 
-    id="backToTop" 
-    class="back-to-top" 
-    aria-label="Back to top"
-    style="display:none;"
-  >
-    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-      <path fill="currentColor" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
-    </svg>
-  </button>
+    <section class="section">
+        <div class="pill-title">BERITA</div>
+        <div class="line-break"></div>
+        <div class="grid-2">
+            <div class="card-wide">
+                <div class="wide-img"><img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b955?auto=format&fit=crop&w=600&q=80"></div>
+                <div class="wide-info"><h3>SMA 16 BANDUNG</h3><p>Roadshow Fisika Kuantum.</p></div>
+            </div>
+            <div class="card-wide">
+                <div class="wide-img"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80"></div>
+                <div class="wide-info"><h3>SMA TELKOM</h3><p>Workshop Roket Air.</p></div>
+            </div>
+        </div>
+    </section>
 
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="f-col-brand">
+                <div class="f-logo">
+                    <img src="assets/logo.png" alt="Logo">
+                    <span>PPS</span>
+                </div>
+                <h3>Pajajaran<br>Physical Society</h3>
+                <p>Komunitas independen penyebaran ilmu fisika.</p>
+            </div>
+            <div class="f-col">
+                <h4>Navigasi</h4>
+                <a href="#home">Home</a>
+                <a href="#activity">Activity</a>
+                <a href="#article">Article</a>
+            </div>
+            <div class="f-col">
+                <h4>Tentang</h4>
+                <a href="#">Profil Kami</a>
+                <a href="#">Kontak</a>
+                <a href="#">Kerjasama</a>
+            </div>
+            <div class="f-col action">
+                <button class="btn-outline">IKUTI KAMI</button>
+                <div class="f-socials">
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copy">© 2026 Jupiter PPS. All rights reserved.</div>
+    </footer>
+
+    <script src="js/main.js"></script>
 </body>
 </html>

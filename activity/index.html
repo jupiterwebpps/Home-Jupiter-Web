@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aktivitas | Pajajaran Physical Society</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+</head>
+
+<body>
+
+    <canvas id="starfield"></canvas>
+    <div class="cosmic-grid"></div>
+
+    <nav class="navbar-floating">
+        <div class="nav-content">
+            <a href="/index.html" class="nav-logo">
+                <img src="/assets/Logo-01.png" alt="PPS Logo">
+            </a>
+
+            <div class="nav-links">
+                <a href="/index.html" onclick="closeMenu()">Home</a>
+                <a href="#about" onclick="closeMenu()">About</a>
+                <a href="#" style="color: var(--orange);" onclick="closeMenu()">Activity</a>
+                <a href="#article" onclick="closeMenu()">Article</a>
+            </div>
+
+            <div class="nav-right">
+                <div class="nav-search">
+                    <form id="searchForm">
+                        <input type="text" id="searchInput" placeholder="Search...">
+                        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                </div>
+
+                <div class="hamburger" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" id="hero-activity" style="justify-content: center; text-align: center;">
+        <div class="hero-text" style="padding-right: 0; display: flex; flex-direction: column; align-items: center; max-width: 800px; margin: 0 auto;">
+            <h1>Jelajahi<br><span class="orange-text">Aktivitas PPS</span></h1>
+            <p class="hero-desc" style="margin-bottom: 40px;">
+                Berbagai program dan kegiatan PPS kami rancang untuk memajukan literasi fisika di Indonesia melalui pendekatan yang edukatif dan inspiratif.
+            </p>
+            <div class="hero-buttons">
+                <a href="#activity" class="btn-main" style="text-decoration: none;">Selengkapnya</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="activity" style="padding-top: 50px;">
+        
+        <div class="activity-gallery-container">
+            <div class="activity-row">
+                <div class="activity-img">
+                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80" alt="IFT Fisika">
+                </div>
+                <div class="activity-text">
+                    <h3>Interesting Fact Time (IFT)</h3>
+                    <p>Mengenalkan dan menyediakan ilmu fisika melalui media cetak seperti poster atau media sosial (Instagram, TikTok, dan YouTube). Pengenalan dapat mencakup fenomena fisika, biografi/sejarah, dan berita terhangat seputar fisika.</p>
+                    <button class="btn-main toggle-gallery-btn" data-target="gallery-ift">Lihat Galeri IFT</button>
+                </div>
+            </div>
+            <div class="activity-gallery hidden" id="gallery-ift">
+                <div class="gallery-grid">
+                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=400&q=80" alt="Kegiatan IFT">
+                    <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=400&q=80" alt="Kegiatan IFT">
+                    <img src="https://images.unsplash.com/photo-1518152006812-edab29b069ac?auto=format&fit=crop&w=400&q=80" alt="Kegiatan IFT">
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-gallery-container">
+            <div class="activity-row reverse">
+                <div class="activity-img">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80" alt="Materi Kuliah">
+                </div>
+                <div class="activity-text">
+                    <h3>Materi Kuliah</h3>
+                    <p>Membagikan materi kuliah berupa berkas pdf/word, Power Point, diktat dosen, atau soal ujian melalui Google Drive. Materi kuliah berpacu pada kurikulum 2016 dan 2020.</p>
+                    <button class="btn-main toggle-gallery-btn" data-target="gallery-materi">Lihat Galeri Materi</button>
+                </div>
+            </div>
+            <div class="activity-gallery hidden" id="gallery-materi">
+                <div class="gallery-grid">
+                    <img src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?auto=format&fit=crop&w=400&q=80" alt="Materi">
+                    <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=400&q=80" alt="Materi">
+                    <img src="https://images.unsplash.com/photo-1581092335397-9583eb92d232?auto=format&fit=crop&w=400&q=80" alt="Materi">
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-gallery-container">
+            <div class="activity-row">
+                <div class="activity-img">
+                    <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80" alt="Jupiter Sekolah">
+                </div>
+                <div class="activity-text">
+                    <h3>Jupiter - Sekolah</h3>
+                    <p>Program pengabdian masyarakat melalui roadshow ke berbagai sekolah. Kami membawa modul interaktif dan demonstrasi fisika menyenangkan.</p>
+                    <button class="btn-main toggle-gallery-btn" data-target="gallery-sekolah">Lihat Galeri Sekolah</button>
+                </div>
+            </div>
+            <div class="activity-gallery hidden" id="gallery-sekolah">
+                <div class="gallery-grid">
+                    <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=400&q=80" alt="Roadshow">
+                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&q=80" alt="Roadshow">
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-gallery-container">
+            <div class="activity-row reverse">
+                <div class="activity-img">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80" alt="Jupiter Website">
+                </div>
+                <div class="activity-text">
+                    <h3>Jupiter - Website</h3>
+                    <p>Tim pengembangan platform digital komunitas yang berfokus pada ekosistem web modern. Mengelola infrastruktur website, dokumentasi artikel fisika, serta mendesain antarmuka (UI/UX) hingga integrasi template CMS untuk publikasi informasi.</p>
+                    <button class="btn-main toggle-gallery-btn" data-target="gallery-website">Lihat Galeri Website</button>
+                </div>
+            </div>
+            <div class="activity-gallery hidden" id="gallery-website">
+                <div class="gallery-grid">
+                    <img src="/assets/hehe.jpg" alt="Coding">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=400&q=80" alt="Coding">
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-gallery-container">
+            <div class="activity-row">
+                <div class="activity-img">
+                    <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80" alt="Jupiter Majalah">
+                </div>
+                <div class="activity-text">
+                    <h3>Jupiter - Majalah</h3>
+                    <p>Produksi buletin saintifik berkala. Mewadahi hasil riset, opini saintifik, dan rekapitulasi penemuan fisika terbaru dari para anggota yang dikemas secara profesional dalam format cetak maupun digital.</p>
+                    <button class="btn-main toggle-gallery-btn" data-target="gallery-majalah">Lihat Galeri Majalah</button>
+                </div>
+            </div>
+            <div class="activity-gallery hidden" id="gallery-majalah">
+                <div class="gallery-grid">
+                    <img src="https://images.unsplash.com/photo-1585241936939-f06b99092dce?auto=format&fit=crop&w=400&q=80" alt="Majalah">
+                    <img src="https://images.unsplash.com/photo-1558500201-92595911470b?auto=format&fit=crop&w=400&q=80" alt="Majalah">
+                    <img src="https://images.unsplash.com/photo-1513001900722-370f803f498d?auto=format&fit=crop&w=400&q=80" alt="Majalah">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="f-col-brand">
+                <div class="f-logo">
+                    <img src="/assets/logo.png" alt="Logo">
+                    <span>PPS</span>
+                </div>
+                <h3>Pajajaran<br>Physical Society</h3>
+                <p>Komunitas independen penyebaran ilmu fisika.</p>
+            </div>
+            <div class="f-col">
+                <h4>Navigasi</h4>
+                <a href="/index.html">Home</a>
+                <a href="#">Activity</a>
+                <a href="#article">Article</a>
+            </div>
+            <div class="f-col">
+                <h4>Tentang</h4>
+                <a href="#">Profil Kami</a>
+                <a href="#">Kontak</a>
+                <a href="#">Kerjasama</a>
+            </div>
+            <div class="f-col action">
+                <button class="btn-outline">IKUTI KAMI</button>
+                <div class="f-socials">
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copy">© 2026 Jupiter PPS. All rights reserved.</div>
+
+        <div id="lightbox" class="lightbox-modal">
+            <span class="lightbox-close">&times;</span>
+            <a class="lightbox-prev" onclick="changeImage(-1)">&#10094;</a>
+            <img class="lightbox-content" id="lightbox-img" alt="Gallery Popup">
+            <a class="lightbox-next" onclick="changeImage(1)">&#10095;</a>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+    
+    <script>
+        document.querySelector('a[href="#activity"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('#activity').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>

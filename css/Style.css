@@ -350,6 +350,98 @@ body {
         font-size: 22px;
     }
 
+/* ACTIVITY */
+.activity-gallery-container {
+    margin-bottom: 80px;
+}
+
+.activity-row {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    margin-bottom: 25px;
+}
+
+.activity-row.reverse {
+    flex-direction: row-reverse;
+}
+
+.activity-img {
+    flex: 1;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--card-bg);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.activity-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+    transition: transform 0.5s ease;
+    display: block;
+}
+
+.activity-img:hover img {
+    transform: scale(1.05);
+}
+
+.activity-text {
+    flex: 1;
+}
+
+.activity-text h3 {
+    font-size: 32px;
+    color: var(--text-white);
+    margin-bottom: 15px;
+    font-weight: 800;
+}
+
+.activity-text p {
+    color: #ccc;
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.activity-gallery {
+    display: none;
+    padding: 30px;
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px dashed rgba(255, 153, 0, 0.4);
+    border-radius: 20px;
+    animation: slideDown 0.4s ease forwards;
+}
+
+.activity-gallery.show {
+    display: block;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.gallery-grid img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-grid img:hover {
+    border-color: var(--orange);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px var(--orange-glow);
+}
+
 /* INSTAGRAM */
 .header-with-social {
     display: flex;
@@ -460,6 +552,75 @@ body {
         transform: translateY(-3px);
         box-shadow: 0 10px 20px var(--orange-glow);
     }
+
+/* --- LIGHTBOX MODAL --- */
+.lightbox-modal {
+    display: none; /* Sembunyikan secara default */
+    position: fixed;
+    z-index: 99999; /* Pastikan berada di paling atas, menutupi navbar */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(8px);
+}
+
+.lightbox-content {
+    margin: auto;
+    display: block;
+    max-width: 85%;
+    max-height: 85vh;
+    border-radius: 12px;
+    box-shadow: 0 0 40px rgba(255, 153, 0, 0.15);
+    object-fit: contain;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: zoomIn 0.3s ease;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    color: #fff;
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 100000;
+}
+
+.lightbox-close:hover {
+    color: var(--orange);
+}
+
+/* Tombol Kiri dan Kanan */
+.lightbox-prev, .lightbox-next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    padding: 20px 25px;
+    color: white;
+    font-weight: bold;
+    font-size: 40px;
+    transition: 0.3s ease;
+    border-radius: 10px;
+    user-select: none;
+    z-index: 100000;
+    background-color: rgba(255,255,255,0.05);
+}
+
+.lightbox-prev { left: 30px; }
+.lightbox-next { right: 30px; }
+
+.lightbox-prev:hover, .lightbox-next:hover {
+    background-color: var(--orange);
+    color: #111;
+}
 
 /* FOOTER */
 .footer {
@@ -668,4 +829,32 @@ body {
         top: auto;
         transform: none;
     }
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsifuntuk Activity */
+@media (max-width: 900px) {
+    .activity-row, .activity-row.reverse {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .activity-text h3 {
+        font-size: 26px;
+    }
+}
+
+@keyframes zoomIn {
+    from { transform: translateY(-50%) scale(0.95); opacity: 0; }
+    to { transform: translateY(-50%) scale(1); opacity: 1; }
+}
+
+@media (max-width: 900px) {
+    .lightbox-content { max-width: 100%; max-height: 70vh; }
+    .lightbox-prev { left: 10px; padding: 10px 15px; font-size: 25px; }
+    .lightbox-next { right: 10px; padding: 10px 15px; font-size: 25px; }
+    .lightbox-close { right: 20px; top: 10px; }
 }

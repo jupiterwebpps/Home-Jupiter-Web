@@ -74,6 +74,30 @@ if (searchForm) {
     });
 }
 
+// Activity
+document.querySelectorAll('.toggle-gallery-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-target');
+        const gallery = document.getElementById(targetId);
+
+        if (gallery.classList.contains('show')) {
+            gallery.classList.remove('show');
+            this.innerHTML = this.innerHTML.replace('Tutup', 'Lihat');
+            this.style.background = 'var(--orange)';
+        } 
+
+        else {
+            gallery.classList.add('show');
+            this.innerHTML = this.innerHTML.replace('Lihat', 'Tutup');
+            this.style.background = '#b36b00'; 
+        }
+        
+        if(typeof ScrollTrigger !== 'undefined') {
+            setTimeout(() => ScrollTrigger.refresh(), 450);
+        }
+    });
+});
+
 // Starfield
 const canvas = document.getElementById("starfield");
 if (canvas) {
@@ -104,3 +128,72 @@ if (canvas) {
         renderer.setSize(window.innerWidth, window.innerHeight);
     });
 }
+
+// --- LOGIKA LIGHTBOX GALLERY ---
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+const closeBtn = document.querySelector(".lightbox-close");
+
+let currentImages = []; // Menyimpan foto-foto di galeri yang sedang dibuka
+let currentImageIndex = 0;
+
+// Pasang pendeteksi klik ke SEMUA gambar di dalam gallery
+document.querySelectorAll('.gallery-grid img').forEach(img => {
+    img.addEventListener('click', function() {
+        // Ambil semua gambar dalam grid kegiatan yang sedang diklik (misal: hanya foto-foto IFT)
+        const parentGrid = this.closest('.gallery-grid');
+        currentImages = Array.from(parentGrid.querySelectorAll('img'));
+        currentImageIndex = currentImages.indexOf(this);
+        
+        // Tampilkan lightbox
+        lightbox.style.display = "block";
+        lightboxImg.src = currentImages[currentImageIndex].src;
+        document.body.style.overflow = "hidden"; // Kunci scroll halaman belakang
+    });
+});
+
+// Fungsi untuk mengganti gambar (Kiri/Kanan)
+function changeImage(direction) {
+    currentImageIndex += direction;
+    
+    // Looping gambar (jika sudah gambar terakhir, balik ke gambar pertama, dan sebaliknya)
+    if (currentImageIndex >= currentImages.length) {
+        currentImageIndex = 0;
+    } else if (currentImageIndex < 0) {
+        currentImageIndex = currentImages.length - 1;
+    }
+    
+    lightboxImg.src = currentImages[currentImageIndex].src;
+}
+
+// Menutup Lightbox saat tombol X diklik
+if (closeBtn) {
+    closeBtn.addEventListener("click", function() {
+        lightbox.style.display = "none";
+        document.body.style.overflow = "auto"; // Aktifkan scroll halaman lagi
+    });
+}
+
+// Menutup Lightbox jika mengklik area gelap (di luar gambar)
+if (lightbox) {
+    lightbox.addEventListener("click", function(e) {
+        if (e.target === lightbox) {
+            lightbox.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+    });
+}
+
+// Tambahan: Navigasi pakai Keyboard (Panah Kiri, Kanan, dan tombol Esc)
+document.addEventListener("keydown", function(e) {
+    if (lightbox && lightbox.style.display === "block") {
+        if (e.key === "ArrowLeft") {
+            changeImage(-1);
+        } else if (e.key === "ArrowRight") {
+            changeImage(1);
+        } else if (e.key === "Escape") {
+            lightbox.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+    }
+});

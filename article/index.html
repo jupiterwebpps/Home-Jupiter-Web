@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artikel | Pajajaran Physical Society</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+
+    <link rel="stylesheet" href="/css/Style.css">
+
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+
+    <script defer src="/js/pps-article.js"></script>
+    <script defer src="/js/main.js"></script>
+</head>
+
+<body>
+
+    <canvas id="starfield"></canvas>
+    <div class="cosmic-grid"></div>
+
+    <!-- ===== NAVBAR — identik Home & Activity ===== -->
+    <nav class="navbar-floating">
+        <div class="nav-content">
+            <a href="/index.html" class="nav-logo">
+                <img src="/assets/Logo-01.png" alt="PPS Logo">
+            </a>
+
+            <div class="nav-links">
+                <a href="/index.html" onclick="closeMenu()">Home</a>
+                <a href="/index.html#about" onclick="closeMenu()">About</a>
+                <a href="/activity/index.html" onclick="closeMenu()">Activity</a>
+                <a href="/article/index.html" style="color: var(--orange);" onclick="closeMenu()">Article</a>
+            </div>
+
+            <div class="nav-right">
+                <div class="nav-search">
+                    <form id="searchForm">
+                        <input type="text" id="q" placeholder="Search...">
+                        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                </div>
+
+                <div class="hamburger" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- ============================================================
+         PAGE: LIST
+    ============================================================ -->
+    <div id="page-list">
+
+        <!-- HERO -->
+        <section class="hero page-hero" id="hero-article"
+                 style="justify-content: center; text-align: center;">
+            <div class="hero-text" style="padding-right: 0; display: flex; flex-direction: column;
+                                          align-items: center; max-width: 800px; margin: 0 auto;">
+                <div class="badge-pill">ARTIKEL &amp; TULISAN</div>
+                <h1>Eksplorasi<br><span class="orange-text">Dunia Fisika</span></h1>
+                <p class="hero-desc">
+                    Kumpulan artikel saintifik, opini, dan ulasan penemuan fisika terkini
+                    yang ditulis oleh anggota Pajajaran Physical Society.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#articles" class="btn-main" style="text-decoration: none;">Baca Artikel</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- KONTEN LIST -->
+        <section class="section" id="articles" style="padding-top: 50px;">
+
+            <!-- Section head: judul + topic dropdown -->
+            <div class="section-head">
+                <h2 class="section-title">PILIH TOPIK</h2>
+
+                <div class="topic-dropdown">
+                    <button class="topic-dropdown-btn" id="topicDropdownBtn"
+                            type="button" aria-haspopup="true" aria-expanded="false">
+                        <span id="dropdownLabel">Pilih Topik Fisika</span>
+                        <span class="topic-count" id="topicCount" style="display:none;">0</span>
+                        <svg class="dropdown-arrow" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+                            <path d="M2 4l4 4 4-4H2z"/>
+                        </svg>
+                    </button>
+
+                    <div class="topic-dropdown-panel" id="topicDropdownPanel">
+                        <div class="dropdown-header"><h4>Topik Fisika</h4></div>
+
+                        <div class="dropdown-search">
+                            <input type="text" id="topicSearch" placeholder="Cari topik..." autocomplete="off">
+                        </div>
+
+                        <div class="dropdown-topics" id="topicsList">
+                            <label class="topic-item is-active" data-topic="all">
+                                <div class="topic-checkbox"></div>
+                                <span class="topic-label">Semua Topik</span>
+                                <span class="topic-article-count" data-count="all">0</span>
+                            </label>
+                            <label class="topic-item" data-topic="Mekanika Klasik">
+                                <div class="topic-checkbox"></div>
+                                <span class="topic-label">Mekanika Klasik</span>
+                                <span class="topic-article-count" data-count="Mekanika Klasik">0</span>
+                            </label>
+                            <label class="topic-item" data-topic="Elektromagnetisme">
+                                <div class="topic-checkbox"></div>
+                                <span class="topic-label">Elektromagnetisme</span>
+                                <span class="topic-article-count" data-count="Elektromagnetisme">0</span>
+                            </label>
+                            <label class="topic-item" data-topic="Termodinamika">
+                                <div class="topic-checkbox"></div>
+                                <span class="topic-label">Termodinamika</span>
+                                <span class="topic-article-count" data-count="Termodinamika">0</span>
+                            </label>
+                            <label class="topic-item" data-topic="Optik & Cahaya">
+                                <div class="topic-checkbox"></div>
+                                <span class="topic-label">Optik &amp; Cahaya</span>
+                                <span class="topic-article-count" data-count="Optik & Cahaya">0</span>
+                            </label>
+                            <label class="topic-item" data-topic="Fisika Kuantum">
+                                <div class="topic-checkbox"></div>
+                                <span class="topic-label">Fisika Kuantum</span>
+                                <span class="topic-article-count" data-count="Fisika Kuantum">0</span>
+                            </label>
+                            <label class="topic-item" data-topic="Fisika Nuklir">
+                                <div class="topic-checkbox"></div>
+                                <span class="topic-label">Fisika Nuklir</span>
+                                <span class="topic-article-count" data-count="Fisika Nuklir">0</span>
+                            </label>
+                            <label class="topic-item" data-topic="Astrofisika">
+                                <div class="topic-checkbox"></div>
+                                <span class="topic-label">Astrofisika</span>
+                                <span class="topic-article-count" data-count="Astrofisika">0</span>
+                            </label>
+                            <label class="topic-item" data-topic="Fisika Modern">
+                                <div class="topic-checkbox"></div>
+                                <span class="topic-label">Fisika Modern</span>
+                                <span class="topic-article-count" data-count="Fisika Modern">0</span>
+                            </label>
+                            <label class="topic-item" data-topic="Gelombang & Bunyi">
+                                <div class="topic-checkbox"></div>
+                                <span class="topic-label">Gelombang &amp; Bunyi</span>
+                                <span class="topic-article-count" data-count="Gelombang & Bunyi">0</span>
+                            </label>
+                            <label class="topic-item" data-topic="Relativitas">
+                                <div class="topic-checkbox"></div>
+                                <span class="topic-label">Relativitas</span>
+                                <span class="topic-article-count" data-count="Relativitas">0</span>
+                            </label>
+                            <label class="topic-item" data-topic="Fisika Komputasi">
+                                <div class="topic-checkbox"></div>
+                                <span class="topic-label">Fisika Komputasi</span>
+                                <span class="topic-article-count" data-count="Fisika Komputasi">0</span>
+                            </label>
+                            <label class="topic-item" data-topic="Biofisika">
+                                <div class="topic-checkbox"></div>
+                                <span class="topic-label">Biofisika</span>
+                                <span class="topic-article-count" data-count="Biofisika">0</span>
+                            </label>
+                            <label class="topic-item" data-topic="Fisika Material">
+                                <div class="topic-checkbox"></div>
+                                <span class="topic-label">Fisika Material</span>
+                                <span class="topic-article-count" data-count="Fisika Material">0</span>
+                            </label>
+                        </div>
+
+                        <div class="dropdown-footer">
+                            <button type="button" class="btn-clear" id="btnClearTopics">Reset</button>
+                            <button type="button" class="btn-apply" id="btnApplyTopics">Terapkan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--
+                #cards: diisi ulang oleh pps-article.js bila articles.json tersedia.
+                Bila belum ada, konten statis di bawah tetap tampil sebagai placeholder.
+                pps-article.js hanya mengganti innerHTML-nya jika data berhasil dimuat.
+            -->
+            <div class="grid grid-3" id="cards" aria-live="polite">
+
+                <!-- Static placeholder cards — tetap tampil sampai JS load data nyata -->
+                <a class="card" href="#" data-topic="Energi" data-title="plts sumber energi masa depan">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b0?auto=format&fit=crop&w=600&q=80" alt="PLTS">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-topic"><span class="dot"></span> Energi</div>
+                        <div class="card-title">PLTS: Sumber Energi Masa Depan</div>
+                        <p class="card-excerpt">Energi surya sebagai solusi terbarukan untuk kebutuhan listrik nasional yang berkelanjutan dan ramah lingkungan.</p>
+                        <div class="card-meta">
+                            <span><i class="fa-regular fa-calendar" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>12 Januari 2026</span>
+                            <span>•</span>
+                            <span><i class="fa-regular fa-user" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>Tim PPS</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="card" href="#" data-topic="Astrofisika" data-title="alam semesta yang mengembang">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=600&q=80" alt="Alam Semesta">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-topic"><span class="dot"></span> Astrofisika</div>
+                        <div class="card-title">Alam Semesta yang Mengembang</div>
+                        <p class="card-excerpt">Memahami konstanta Hubble dan implikasinya terhadap nasib akhir alam semesta kita.</p>
+                        <div class="card-meta">
+                            <span><i class="fa-regular fa-calendar" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>28 Januari 2026</span>
+                            <span>•</span>
+                            <span><i class="fa-regular fa-user" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>Tim PPS</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="card" href="#" data-topic="Fisika Kuantum" data-title="paradoks schrödinger">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=600&q=80" alt="Kuantum">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-topic"><span class="dot"></span> Fisika Kuantum</div>
+                        <div class="card-title">Paradoks Schrödinger</div>
+                        <p class="card-excerpt">Kucing yang sekaligus hidup dan mati — apa sebenarnya yang ingin dijelaskan oleh Schrödinger?</p>
+                        <div class="card-meta">
+                            <span><i class="fa-regular fa-calendar" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>3 Feb 2026</span>
+                            <span>•</span>
+                            <span><i class="fa-regular fa-user" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>Tim PPS</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="card" href="#" data-topic="Relativitas" data-title="relativitas khusus einstein">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=600&q=80" alt="Relativitas">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-topic"><span class="dot"></span> Relativitas</div>
+                        <div class="card-title">Relativitas Khusus Einstein</div>
+                        <p class="card-excerpt">Mengapa kecepatan cahaya konstan dan bagaimana hal ini mengubah cara kita memandang ruang-waktu.</p>
+                        <div class="card-meta">
+                            <span><i class="fa-regular fa-calendar" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>10 Feb 2026</span>
+                            <span>•</span>
+                            <span><i class="fa-regular fa-user" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>Tim PPS</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="card" href="#" data-topic="Fisika Kuantum" data-title="dualitas gelombang-partikel">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=600&q=80" alt="Gelombang">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-topic"><span class="dot"></span> Fisika Kuantum</div>
+                        <div class="card-title">Dualitas Gelombang-Partikel</div>
+                        <p class="card-excerpt">Cahaya berperilaku sebagai gelombang sekaligus partikel — eksperimen celah ganda yang mengubah segalanya.</p>
+                        <div class="card-meta">
+                            <span><i class="fa-regular fa-calendar" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>17 Feb 2026</span>
+                            <span>•</span>
+                            <span><i class="fa-regular fa-user" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>Tim PPS</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="card" href="#" data-topic="Astrofisika" data-title="lubang hitam dan cakrawala peristiwa">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1518152006812-edab29b069ac?auto=format&fit=crop&w=600&q=80" alt="Black Hole">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-topic"><span class="dot"></span> Astrofisika</div>
+                        <div class="card-title">Lubang Hitam &amp; Cakrawala Peristiwa</div>
+                        <p class="card-excerpt">Apa yang terjadi jika kamu jatuh ke dalam lubang hitam? Fisika modern menjawab.</p>
+                        <div class="card-meta">
+                            <span><i class="fa-regular fa-calendar" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>20 Feb 2026</span>
+                            <span>•</span>
+                            <span><i class="fa-regular fa-user" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>Tim PPS</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="card" href="#" data-topic="Termodinamika" data-title="hukum kedua termodinamika">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80" alt="Termodinamika">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-topic"><span class="dot"></span> Termodinamika</div>
+                        <div class="card-title">Hukum Kedua Termodinamika</div>
+                        <p class="card-excerpt">Entropi selalu meningkat — mengapa waktu hanya berjalan ke depan.</p>
+                        <div class="card-meta">
+                            <span><i class="fa-regular fa-calendar" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>21 Feb 2026</span>
+                            <span>•</span>
+                            <span><i class="fa-regular fa-user" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>Tim PPS</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="card" href="#" data-topic="Fisika Nuklir" data-title="fusi nuklir energi bintang di bumi">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80" alt="Fusi Nuklir">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-topic"><span class="dot"></span> Fisika Nuklir</div>
+                        <div class="card-title">Fusi Nuklir: Energi Bintang di Bumi</div>
+                        <p class="card-excerpt">Mimpi energi bersih tanpa batas — seberapa dekat kita dengan reaktor fusi komersial pertama?</p>
+                        <div class="card-meta">
+                            <span><i class="fa-regular fa-calendar" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>21 Feb 2026</span>
+                            <span>•</span>
+                            <span><i class="fa-regular fa-user" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>Tim PPS</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="card" href="#" data-topic="Mekanika Klasik" data-title="hukum gerak newton">
+                    <div class="card-thumb">
+                        <img src="https://images.unsplash.com/photo-1454789548928-9efd52dc4031?auto=format&fit=crop&w=600&q=80" alt="Newton">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-topic"><span class="dot"></span> Mekanika Klasik</div>
+                        <div class="card-title">Hukum Gerak Newton</div>
+                        <p class="card-excerpt">Tiga hukum sederhana yang menjelaskan hampir semua gerak yang kita temui dalam kehidupan sehari-hari.</p>
+                        <div class="card-meta">
+                            <span><i class="fa-regular fa-calendar" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>22 Feb 2026</span>
+                            <span>•</span>
+                            <span><i class="fa-regular fa-user" style="margin-right:4px;color:var(--orange);opacity:.7;"></i>Tim PPS</span>
+                        </div>
+                    </div>
+                </a>
+
+            </div><!-- /#cards -->
+
+            <nav class="pagination" id="pager" style="display:none;"></nav>
+
+        </section>
+    </div><!-- /#page-list -->
+
+
+    <!-- ============================================================
+         PAGE: DETAIL — disembunyikan, ditampilkan via SPA router
+    ============================================================ -->
+    <div id="page-detail" style="display:none;">
+        <section class="section">
+
+            <a class="back-link" href="/article/index.html" id="backToList">
+                <svg width="18" height="18" viewBox="0 0 24 24" style="margin-right:6px;">
+                    <path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+                Kembali ke Artikel
+            </a>
+
+            <div id="detailMount">
+                <div style="text-align:center; padding:60px 0;">
+                    <div class="loading-spinner"></div>
+                    <p class="text-muted" style="margin-top:16px;">Memuat artikel...</p>
+                </div>
+            </div>
+
+        </section>
+    </div><!-- /#page-detail -->
+
+
+    <!-- ===== NEWSLETTER ===== -->
+    <section class="newsletter">
+        <div class="newsletter-overlay"></div>
+        <div class="newsletter-content">
+            <h2>BERLANGGANAN PPS</h2>
+            <p>Dapatkan update kegiatan dan artikel terbaru via email.</p>
+            <form onsubmit="event.preventDefault()">
+                <input type="email" placeholder="Masukkan email anda...">
+                <button type="submit">SIGN UP</button>
+            </form>
+        </div>
+    </section>
+
+
+    <!-- ===== FOOTER — identik Home & Activity ===== -->
+    <footer class="pps-footer" role="contentinfo">
+        <div class="container">
+            <div class="pps-footer-grid">
+
+                <div class="pps-footer-brand">
+                    <div class="pps-footer-brandline">
+                        <img
+                            class="pps-footer-brandlogo"
+                            src="/assets/footer-logo.png"
+                            alt="Pajajaran Physical Society"
+                            width="182" height="56"
+                            loading="lazy" decoding="async"
+                        />
+                    </div>
+                    <p class="pps-footer-desc">
+                        Adalah sebuah komunitas independen yang berfokus dalam kegiatan penyebaran ilmu fisika beserta manfaatnya bagi masyarakat sekitar.
+                    </p>
+                    <p class="pps-footer-desc pps-footer-desc-en">
+                        <em>Is a not-for-profit, independent, and unofficial community that focuses on spreading knowledge of physics and its benefits to the public.</em>
+                    </p>
+                </div>
+
+                <nav class="pps-footer-menu" aria-label="Footer navigation">
+                    <a class="pps-footer-menuitem" href="/article/index.html">Artikel</a>
+                    <a class="pps-footer-menuitem" href="/index.html#about">Tentang Kami</a>
+                    <a class="pps-footer-menuitem" href="/index.html#content">Konten</a>
+                    <a class="pps-footer-menuitem" href="/index.html#news">Berita</a>
+                    <a class="pps-footer-menuitem" href="/index.html#subscribe">Langganan</a>
+                    <a class="pps-footer-menuitem" href="/activity/index.html">Aktivitas</a>
+                </nav>
+
+                <div class="pps-footer-follow">
+                    <a class="pps-footer-cta" href="#" aria-label="Ikuti kami di media sosial">IKUTI KAMI</a>
+
+                    <div class="pps-footer-socials" role="list" aria-label="Social media links">
+                        <a class="pps-footer-social" href="#" aria-label="YouTube" role="listitem">
+                            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill="currentColor" d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.8 4.6 12 4.6 12 4.6s-5.8 0-7.5.5A3 3 0 0 0 2.4 7.2 31 31 0 0 0 2 12s0 3.4.4 4.8a3 3 0 0 0 2.1 2.1c1.7.5 7.5.5 7.5.5s5.8 0 7.5-.5a3 3 0 0 0 2.1-2.1c.4-1.4.4-4.8.4-4.8s0-3.4-.4-4.8ZM10 15.5v-7l6 3.5-6 3.5Z"/>
+                            </svg>
+                        </a>
+                        <a class="pps-footer-social" href="#" aria-label="Instagram" role="listitem">
+                            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill="currentColor" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm-5 4.5A3.5 3.5 0 1 1 8.5 12 3.5 3.5 0 0 1 12 8.5Zm0 2A1.5 1.5 0 1 0 13.5 12 1.5 1.5 0 0 0 12 10.5ZM17.8 6.8a.8.8 0 1 1-.8-.8.8.8 0 0 1 .8.8Z"/>
+                            </svg>
+                        </a>
+                        <a class="pps-footer-social" href="#" aria-label="TikTok" role="listitem">
+                            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill="currentColor" d="M14 3v10.2a3.6 3.6 0 1 1-3-3.5V7.3a6.5 6.5 0 1 0 5 6.3V8.4c1.1 1 2.5 1.6 4 1.7V7.6c-2-.2-3.6-1.6-4-4.6H14Z"/>
+                            </svg>
+                        </a>
+                        <a class="pps-footer-social" href="#" aria-label="LinkedIn" role="listitem">
+                            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill="currentColor" d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.1A4.2 4.2 0 0 1 17.7 9c4 0 4.8 2.6 4.8 6v6H18.5v-5.3c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21H10V9Z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="pps-footer-bottom">
+                <p>&copy; 2026 Pajajaran Physical Society. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top -->
+    <button id="backToTop" class="back-to-top" aria-label="Kembali ke atas" style="display:none;">
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+        </svg>
+    </button>
+
+    <!-- Overlay dropdown -->
+    <div class="dropdown-overlay" id="dropdownOverlay"></div>
+
+    <!-- SPA Router -->
+    <script>
+        (function () {
+            var id = new URLSearchParams(location.search).get('id');
+            document.getElementById('page-list').style.display   = id ? 'none'  : 'block';
+            document.getElementById('page-detail').style.display = id ? 'block' : 'none';
+            if (id) document.title = 'Detail Artikel \u2014 Pajajaran Physical Society';
+        })();
+    </script>
+
+    <!-- Fallback closeMenu -->
+    <script>
+        if (typeof window.closeMenu !== 'function') {
+            window.closeMenu = function () {
+                var nav = document.querySelector('.nav-links');
+                if (nav) nav.classList.remove('active');
+            };
+        }
+    </script>
+
+</body>
+</html>

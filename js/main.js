@@ -64,13 +64,63 @@ document.addEventListener('click', (e) => {
     if (!navbar.contains(e.target)) closeMenu();
 });
 
-// Search control
+// --- SISTEM PENCARIAN DENGAN DATABASE EXTERNAL (Note ini sementara dan masih blm fix banget karena databasenya local) ---
 const searchForm = document.getElementById('searchForm');
+
+const sitePages = [
+    { url: "/index.html", title: "Home", keywords: ["beranda", "pps", "pajajaran"] },
+    { url: "/about/index.html", title: "About Us", keywords: ["tentang", "visi", "misi", "founder", "sejarah"] },
+    { url: "/activity/index.html", title: "Activity", keywords: ["aktivitas", "kegiatan", "proyek", "ift"] }
+];
+
 if (searchForm) {
-    searchForm.addEventListener('submit', (e) => {
+    searchForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const query = document.getElementById('searchInput').value;
-        if (query) alert("Searching for: " + query);
+        const searchInput = document.getElementById('searchInput');
+        const query = searchInput.value.toLowerCase().trim();
+
+        if (!query) return;
+
+        let foundUrl = null;
+
+        for (const page of sitePages) {
+            if (page.title.toLowerCase().includes(query) || page.keywords.some(kw => query.includes(kw))) {
+                foundUrl = page.url;
+                break;
+            }
+        }
+
+        if (!foundUrl) {
+            try 
+                const response = await fetch('data/articles.txt');
+
+                if (!response.ok) throw new Error("Gagal mengambil data artikel");
+
+                const articleDatabase = await response.json();
+
+                for (const article of articleDatabase) {
+                    if (article.title.toLowerCase().includes(query) || article.excerpt.toLowerCase().includes(query)) {
+                        foundUrl = article.url;
+                        break; 
+                    }
+                }
+            } catch (error) {
+                console.error("Error Sistem Pencarian:", error);
+                alert("Terjadi kesalahan saat memuat database artikel. Coba lagi nanti.");
+                return;
+            }
+        }
+
+        if (foundUrl) {
+            searchInput.value = "Mengarahkan...";
+            searchInput.style.color = "var(--orange)";
+            setTimeout(() => {
+                window.location.href = foundUrl;
+            }, 500);
+        } else {
+            alert('Maaf, hasil untuk "' + query + '" tidak ditemukan.');
+            searchInput.value = "";
+        }
     });
 }
 

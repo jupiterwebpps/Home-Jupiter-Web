@@ -1727,6 +1727,7 @@ a.article-related-card { text-decoration: none; }
 
 .gradient-text {
     background: linear-gradient(90deg, #fff, var(--orange));
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-size: 36px;

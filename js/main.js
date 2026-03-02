@@ -91,7 +91,7 @@ if (searchForm) {
         }
 
         if (!foundUrl) {
-            try 
+            try {
                 const response = await fetch('data/articles.txt');
 
                 if (!response.ok) throw new Error("Gagal mengambil data artikel");

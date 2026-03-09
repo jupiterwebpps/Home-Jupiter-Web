@@ -1,11 +1,19 @@
 ﻿gsap.registerPlugin(ScrollTrigger);
 
-// Start
-gsap.set(".card-glass, .card-wide, .section-title, .pill-title", { y: 50, opacity: 0 });
+// 1. Set Status Awal (Sembunyikan Elemen)
+gsap.set(".card-glass, .card-wide, .section-title, .pill-title, .aps-founder-card, .tier-title, .member-card", {
+    y: 50,
+    opacity: 0
+});
 
-// Scroll Animations
+// 2. Scroll Animations (Untuk Elemen Umum)
 gsap.utils.toArray(".section, .newsletter").forEach(section => {
-    const elements = section.querySelectorAll(".card-glass, .card-wide, .section-title, .pill-title, .newsletter-content > *");
+    // Mengecualikan elemen yang ada di dalam founders & members section agar bisa dianimasikan terpisah
+    const elements = section.querySelectorAll(".card-glass, .card-wide, .pill-title, .newsletter-content > *");
+
+    // Animasikan Section Title secara terpisah jika bukan bagian dari Founders/Members
+    const sectionTitle = section.querySelector(".section-title:not(.founders-section .section-title):not(.members-section .section-title)");
+
     if (elements.length > 0) {
         gsap.to(elements, {
             scrollTrigger: {
@@ -21,7 +29,71 @@ gsap.utils.toArray(".section, .newsletter").forEach(section => {
             overwrite: "auto"
         });
     }
+
+    if (sectionTitle) {
+        gsap.to(sectionTitle, {
+            scrollTrigger: { trigger: sectionTitle, start: "top 90%", toggleActions: "play none none reverse" },
+            y: 0, opacity: 1, duration: 0.8, ease: "power2.out"
+        });
+    }
 });
+
+// 3. Animasi Khusus Founders
+if (document.querySelector(".aps-founders-grid")) {
+    gsap.to(".founders-section .section-title", {
+        scrollTrigger: { trigger: ".founders-section", start: "top 90%", toggleActions: "play none none reverse" },
+        y: 0, opacity: 1, duration: 0.8, ease: "power2.out"
+    });
+
+    gsap.to(".aps-founder-card", {
+        scrollTrigger: {
+            trigger: ".aps-founders-grid",
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+        },
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "back.out(1.2)" // Efek memantul halus khas desain modern
+    });
+}
+
+// 4. Animasi Khusus Hierarchy Members (Per Baris)
+if (document.querySelector(".members-section")) {
+    gsap.to(".members-section .section-title", {
+        scrollTrigger: { trigger: ".members-section", start: "top 90%", toggleActions: "play none none reverse" },
+        y: 0, opacity: 1, duration: 0.8, ease: "power2.out"
+    });
+
+    // Animasikan setiap tier (Chairman -> BoD -> Staff) satu per satu saat muncul di layar
+    gsap.utils.toArray(".member-tier").forEach(tier => {
+        const title = tier.querySelector(".tier-title");
+        const cards = tier.querySelectorAll(".member-card");
+
+        // Animasi Judul Posisi (Chairman, BoD, dll)
+        if (title) {
+            gsap.to(title, {
+                scrollTrigger: { trigger: tier, start: "top 90%", toggleActions: "play none none reverse" },
+                y: 0, opacity: 1, duration: 0.6, ease: "power2.out"
+            });
+        }
+
+        // Animasi Kartu Anggota
+        if (cards.length > 0) {
+            gsap.to(cards, {
+                scrollTrigger: { trigger: tier, start: "top 85%", toggleActions: "play none none reverse" },
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                // Jika kartunya banyak (seperti Staff), animasinya dibuat bergelombang cepat (total max 1.5 detik)
+                // Jika sedikit (Chairman/BoD), beri delay stabil (0.15 detik per kartu)
+                stagger: cards.length > 10 ? { amount: 1.5, from: "start" } : 0.15,
+                ease: "power2.out"
+            });
+        }
+    });
+}
 
 // Navbar Scroll
 window.addEventListener("scroll", () => {
@@ -38,7 +110,7 @@ const tl = gsap.timeline();
 tl.from(".hero-text > *", { y: 30, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out", delay: 0.2 })
     .from(".hero-img", { x: 30, opacity: 0, duration: 1, ease: "power2.out" }, "-=0.6");
 
-// Mobile Menu T
+// Mobile Menu Toggle
 const navLinks = document.querySelector(".nav-links");
 const hamburgerIcon = document.querySelector(".hamburger i");
 
@@ -63,6 +135,7 @@ document.addEventListener('click', (e) => {
     const navbar = document.querySelector('.navbar-floating');
     if (!navbar.contains(e.target)) closeMenu();
 });
+
 
 // --- SISTEM PENCARIAN DENGAN DATABASE EXTERNAL (Note ini sementara dan masih blm fix banget karena databasenya local) ---
 const searchForm = document.getElementById('searchForm');
